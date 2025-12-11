@@ -1,0 +1,42 @@
+Configuration file - old version
+server:
+  host: localhost
+  port: 3000
+  debug: true
+  verbose: true
+  log_level: debug
+
+database:
+  host: localhost
+  port: 5432
+  name: old_db
+  user: admin
+  password: admin123
+  pool_size: 10
+  timeout: 30
+
+cache:
+  host: localhost
+  port: 6379
+  ttl: 3600
+  enabled: true
+
+email:
+  service: smtp
+  host: smtp.example.com
+  port: 587
+  user: noreply@example.com
+  password: password123
+  from: noreply@example.com
+
+api:
+  timeout: 30
+  retry_attempts: 3
+  rate_limit: 1000
+  
+features:
+  auth: true
+  payments: true
+  notifications: true
+  analytics: true
+  admin_panel: true

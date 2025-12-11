@@ -1,0 +1,44 @@
+Database schema migration - temporary
+Schema version 1.0
+Initial design document
+This file contains old schema definitions
+Line 5: OLD_TABLE_1 structure
+Line 6: Column definitions
+Line 7: Index information
+Line 8: Constraint definitions
+Line 9: Relationship mapping
+Line 10: More schema details
+
+OLD_TABLE_2 definition
+Column 1: id
+Column 2: name
+Column 3: email
+Column 4: created_at
+Column 5: updated_at
+Column 6: deleted_at
+
+OLD_TABLE_3 definition
+Column 1: id
+Column 2: user_id
+Column 3: content
+Column 4: status
+Column 5: priority
+Column 6: created_at
+Column 7: updated_at
+
+OLD_TABLE_4 definition
+Column 1: id
+Column 2: product_id
+Column 3: quantity
+Column 4: price
+Column 5: discount
+Column 6: created_at
+
+OLD_TABLE_5 definition
+Column 1: id
+Column 2: order_id
+Column 3: tracking_number
+Column 4: status
+Column 5: estimated_delivery
+Column 6: actual_delivery
+Column 7: created_at
