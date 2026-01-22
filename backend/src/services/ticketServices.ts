@@ -1,0 +1,96 @@
+import Ticket from "../models/supportTicketModel.js";
+
+export async function addTicket(
+  userId: string,
+  subject: string,
+  category: string,
+  description: string
+) {
+  try {
+    const ticket = new Ticket({
+      userId,
+      subject,
+      category,
+      description,
+    });
+    await ticket.save();
+    return { success: true };
+  } catch (e) {
+    throw new Error("Error adding ticket: " + (e as Error).message);
+  }
+}
+
+export async function getTickets() {
+  try {
+    const tickets = await Ticket.find({ isValid: true }).populate(
+      "userId",
+      "username name email mobile_no role"
+    );
+    return tickets;
+  } catch (e) {
+    throw new Error("Error fetching tickets: " + (e as Error).message);
+  }
+}
+
+export async function removeTicket(ticketId: string) {
+  try {
+    const ticket = await Ticket.findOneAndUpdate(
+      { _id: ticketId, isValid: true },
+      { isValid: false },
+      { new: true }
+    );
+    if (!ticket) {
+      throw new Error("Ticket not found");
+    }
+    return { success: true };
+  } catch (e) {
+    throw new Error("Error deleting ticket: " + (e as Error).message);
+  }
+}
+
+export async function updateTicketStatus(
+  ticketId: string,
+  status: "open" | "in-progress" | "resolved" | "closed"
+) {
+  try {
+    const ticket = await Ticket.findOneAndUpdate(
+      { _id: ticketId, isValid: true },
+      { 
+        status,
+        updatedAt: new Date().toISOString()
+      },
+      { new: true }
+    ).populate("userId", "username name email mobile_no role");
+    
+    if (!ticket) {
+      throw new Error("Ticket not found");
+    }
+    return ticket;
+  } catch (e) {
+    throw new Error("Error updating ticket status: " + (e as Error).message);
+  }
+}
+
+export async function getAllTicketsForAdmin() {
+  try {
+    const tickets = await Ticket.find({ isValid: true })
+      .populate("userId", "name")
+      .lean();
+    return tickets;
+  } catch (e) {
+    throw new Error(
+      "Error getting all tickets for admin: " + (e as Error).message
+    );
+  }
+}
+
+export async function getUserTickets(userId: string) {
+  try {
+    const tickets = await Ticket.find({ userId, isValid: true })
+      .sort({ createdAt: -1 })
+      .lean();
+    return tickets;
+  } catch (e) {
+    throw new Error("Error fetching user tickets: " + (e as Error).message);
+  }
+}
